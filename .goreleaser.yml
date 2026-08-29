@@ -1,0 +1,47 @@
+version: 2
+
+project_name: seatkey
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: seatkeyd
+    main: ./cmd/seatkeyd
+    binary: seatkeyd
+    goos: [linux, darwin]
+    goarch: [amd64, arm64]
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+
+  - id: democli
+    main: ./cmd/democli
+    binary: democli
+    goos: [linux, darwin]
+    goarch: [amd64, arm64]
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+
+archives:
+  - id: seatkey
+    ids: [seatkeyd, democli]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    formats: [tar.gz]
+    files:
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: "checksums.txt"
+
+release:
+  github:
+    owner: Laaaaksh
+    name: seatkey
+  draft: false
+  prerelease: auto

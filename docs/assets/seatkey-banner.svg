@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="220" viewBox="0 0 900 220" role="img" aria-label="seatkey">
+  <rect width="900" height="220" rx="14" fill="#0d1117" stroke="#30363d" stroke-width="2"/>
+
+  <!-- key icon -->
+  <g transform="translate(70,72)">
+    <circle cx="38" cy="38" r="34" fill="none" stroke="#58a6ff" stroke-width="10"/>
+    <circle cx="38" cy="38" r="12" fill="#0d1117"/>
+    <rect x="66" y="30" width="86" height="16" fill="#58a6ff"/>
+    <rect x="128" y="46" width="14" height="18" fill="#58a6ff"/>
+    <rect x="150" y="46" width="14" height="26" fill="#58a6ff"/>
+  </g>
+
+  <text x="250" y="112" font-family="Menlo, Consolas, monospace" font-weight="700" font-size="56" fill="#e6edf3">seatkey</text>
+  <text x="252" y="148" font-family="Menlo, Consolas, monospace" font-size="17" fill="#8b949e">self-hosted license keys, no lock-in</text>
+
+  <rect x="70" y="176" width="12" height="12" fill="#56d364"/>
+  <text x="92" y="187" font-family="Menlo, Consolas, monospace" font-size="14" fill="#8b949e">MIT licensed</text>
+  <rect x="230" y="176" width="12" height="12" fill="#e3b341"/>
+  <text x="252" y="187" font-family="Menlo, Consolas, monospace" font-size="14" fill="#8b949e">Ed25519-signed offline activation</text>
+  <rect x="560" y="176" width="12" height="12" fill="#39c5cf"/>
+  <text x="582" y="187" font-family="Menlo, Consolas, monospace" font-size="14" fill="#8b949e">single binary, no external DB</text>
+</svg>

@@ -1,0 +1,32 @@
+{{define "products"}}
+<h1>Products</h1>
+
+<div class="card">
+  <h2>New product</h2>
+  <form method="post" action="/products">
+    <label for="name">Product name</label>
+    <input type="text" id="name" name="name" placeholder="e.g. Acme CLI" required autofocus>
+    <p style="margin-top:1rem"><button type="submit">Create product</button></p>
+  </form>
+</div>
+
+<div class="card">
+  <h2>All products</h2>
+  {{if .Products}}
+  <table>
+    <thead><tr><th>Name</th><th>Created</th><th></th></tr></thead>
+    <tbody>
+    {{range .Products}}
+      <tr>
+        <td><a href="/products/{{.ID}}">{{.Name}}</a></td>
+        <td class="muted">{{.CreatedAt.Format "2006-01-02"}}</td>
+        <td><a href="/products/{{.ID}}">View licenses →</a></td>
+      </tr>
+    {{end}}
+    </tbody>
+  </table>
+  {{else}}
+  <p class="empty">No products yet. Create one above to start issuing license keys.</p>
+  {{end}}
+</div>
+{{end}}

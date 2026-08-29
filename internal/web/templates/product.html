@@ -1,0 +1,54 @@
+{{define "product"}}
+<p class="muted"><a href="/products">← All products</a></p>
+<h1>{{.Product.Name}}</h1>
+
+<div class="card">
+  <h2>Issue a new license key</h2>
+  <form method="post" action="/products/{{.Product.ID}}/licenses">
+    <div class="row">
+      <div>
+        <label for="customer_name">Customer name</label>
+        <input type="text" id="customer_name" name="customer_name" required autofocus>
+      </div>
+      <div>
+        <label for="customer_email">Customer email</label>
+        <input type="email" id="customer_email" name="customer_email">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="max_devices">Device limit</label>
+        <input type="number" id="max_devices" name="max_devices" min="1" value="1" required>
+      </div>
+      <div>
+        <label for="expires_at">Expires (optional)</label>
+        <input type="date" id="expires_at" name="expires_at">
+      </div>
+    </div>
+    <p style="margin-top:1rem"><button type="submit">Issue license key</button></p>
+  </form>
+</div>
+
+<div class="card">
+  <h2>Licenses</h2>
+  {{if .Licenses}}
+  <table>
+    <thead><tr><th>Key</th><th>Customer</th><th>Status</th><th>Seats</th><th>Expires</th><th></th></tr></thead>
+    <tbody>
+    {{range .Licenses}}
+      <tr>
+        <td class="mono"><a href="/licenses/{{.ID}}">{{.Key}}</a></td>
+        <td>{{.CustomerName}}</td>
+        <td><span class="badge {{.StatusText}}">{{.StatusText}}</span></td>
+        <td>{{.DeviceCount}}/{{.MaxDevices}}</td>
+        <td class="muted">{{.ExpiresText}}</td>
+        <td><a href="/licenses/{{.ID}}">Manage →</a></td>
+      </tr>
+    {{end}}
+    </tbody>
+  </table>
+  {{else}}
+  <p class="empty">No licenses issued yet for this product.</p>
+  {{end}}
+</div>
+{{end}}

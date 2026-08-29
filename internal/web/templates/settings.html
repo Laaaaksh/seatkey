@@ -1,0 +1,43 @@
+{{define "settings"}}
+<h1>Settings</h1>
+{{if .Error}}<div class="error">{{.Error}}</div>{{end}}
+
+<div class="card">
+  <h2>Server public key</h2>
+  <p class="muted">
+    Embed this in your app to verify signed activation and validation responses offline, without
+    trusting the network. It never changes once generated, so already-issued offline activation
+    files stay valid across restarts and upgrades.
+  </p>
+  <pre>{{.PublicKey}}</pre>
+</div>
+
+<div class="card">
+  <h2>Webhook</h2>
+  <p class="muted">
+    Seatkey fires an HMAC-signed POST here on every activation and deactivation, so you can wire
+    up your own billing or CRM without Seatkey needing to integrate with it directly. Leave the
+    URL blank to disable.
+  </p>
+  <form method="post" action="/settings/webhook">
+    <label for="webhook_url">Webhook URL</label>
+    <input type="url" id="webhook_url" name="webhook_url" value="{{.WebhookURL}}" placeholder="https://example.com/hooks/seatkey">
+    <label for="webhook_secret">Webhook secret</label>
+    <input type="text" id="webhook_secret" name="webhook_secret" value="{{.WebhookSecret}}" placeholder="used to sign the X-Seatkey-Signature header">
+    <p style="margin-top:1rem"><button type="submit">Save webhook settings</button></p>
+  </form>
+</div>
+
+<div class="card">
+  <h2>Change admin password</h2>
+  <form method="post" action="/settings/password">
+    <label for="current_password">Current password</label>
+    <input type="password" id="current_password" name="current_password" required>
+    <label for="new_password">New password</label>
+    <input type="password" id="new_password" name="new_password" minlength="8" required>
+    <label for="confirm_password">Confirm new password</label>
+    <input type="password" id="confirm_password" name="confirm_password" minlength="8" required>
+    <p style="margin-top:1rem"><button type="submit">Update password</button></p>
+  </form>
+</div>
+{{end}}

@@ -1,0 +1,11 @@
+{{define "login"}}
+<div class="auth-card">
+  <h1>Log in</h1>
+  {{if .Error}}<div class="error">{{.Error}}</div>{{end}}
+  <form method="post" action="/login">
+    <label for="password">Admin password</label>
+    <input type="password" id="password" name="password" required autofocus>
+    <p class="muted" style="margin-top:1rem"><button type="submit">Log in</button></p>
+  </form>
+</div>
+{{end}}
