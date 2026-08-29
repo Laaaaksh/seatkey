@@ -29,9 +29,13 @@ func (s *Store) GetActiveDevice(licenseID, deviceID string) (Device, error) {
 	return d, err
 }
 
-// ActivateDevice inserts a new active device row. Callers must first check
-// ActiveDeviceCount against the license's MaxDevices themselves, inside the
-// same logical operation, to enforce the seat limit.
+// ActivateDevice inserts a new active device row, or, if deviceID previously
+// held and then freed a seat on this license, revives that row instead of
+// inserting a duplicate — device_id is only unique per license, so a second
+// activation attempt after deactivation must reuse the row rather than
+// violate the UNIQUE(license_id, device_id) constraint. Callers must first
+// check ActiveDeviceCount against the license's MaxDevices themselves,
+// inside the same logical operation, to enforce the seat limit.
 func (s *Store) ActivateDevice(licenseID, deviceID, deviceName string) (Device, error) {
 	now := time.Now().UTC()
 	d := Device{
@@ -41,14 +45,16 @@ func (s *Store) ActivateDevice(licenseID, deviceID, deviceName string) (Device, 
 		ActivatedAt: now,
 		LastSeenAt:  now,
 	}
-	res, err := s.db.Exec(`
+	err := s.db.QueryRow(`
 		INSERT INTO devices (license_id, device_id, device_name, activated_at, last_seen_at)
 		VALUES (?, ?, ?, ?, ?)
-	`, d.LicenseID, d.DeviceID, d.DeviceName, d.ActivatedAt, d.LastSeenAt)
-	if err != nil {
-		return Device{}, err
-	}
-	d.ID, err = res.LastInsertId()
+		ON CONFLICT(license_id, device_id) DO UPDATE SET
+			device_name = excluded.device_name,
+			activated_at = excluded.activated_at,
+			last_seen_at = excluded.last_seen_at,
+			deactivated_at = NULL
+		RETURNING id
+	`, d.LicenseID, d.DeviceID, d.DeviceName, d.ActivatedAt, d.LastSeenAt).Scan(&d.ID)
 	return d, err
 }
 

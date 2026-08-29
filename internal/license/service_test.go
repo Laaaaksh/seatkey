@@ -166,6 +166,30 @@ func TestDeactivateFreesASeat(t *testing.T) {
 	}
 }
 
+func TestReactivateSameDeviceAfterDeactivation(t *testing.T) {
+	svc, _, lic := newTestService(t)
+
+	if _, err := svc.Activate(lic.Key, "device-1", "Laptop"); err != nil {
+		t.Fatalf("first Activate: %v", err)
+	}
+	if err := svc.Deactivate(lic.Key, "device-1"); err != nil {
+		t.Fatalf("Deactivate: %v", err)
+	}
+
+	env, err := svc.Activate(lic.Key, "device-1", "Laptop")
+	if err != nil {
+		t.Fatalf("re-activating the same device after deactivation should succeed, got: %v", err)
+	}
+	tok := verifyToken(t, svc, env)
+	if tok.SeatsUsed != 1 {
+		t.Fatalf("re-activated device should hold exactly one seat, got SeatsUsed=%d", tok.SeatsUsed)
+	}
+
+	if err := svc.Deactivate(lic.Key, "device-1"); err != nil {
+		t.Fatalf("Deactivate after reactivation: %v", err)
+	}
+}
+
 func TestValidateRequiresPriorActivation(t *testing.T) {
 	svc, _, lic := newTestService(t)
 
