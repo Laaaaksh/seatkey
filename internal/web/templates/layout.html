@@ -1,0 +1,27 @@
+{{define "layout"}}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{.Title}} · Seatkey</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">🔑 Seatkey</div>
+    {{if .Authed}}
+    <nav>
+      <a href="/products">Products</a>
+      <a href="/settings">Settings</a>
+      <form class="inline" method="post" action="/logout">
+        <button class="secondary" type="submit">Log out</button>
+      </form>
+    </nav>
+    {{end}}
+  </header>
+  <main>
+    {{.Body}}
+  </main>
+</body>
+</html>
+{{end}}

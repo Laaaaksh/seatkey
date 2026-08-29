@@ -1,0 +1,14 @@
+{{define "setup"}}
+<div class="auth-card">
+  <h1>Set up Seatkey</h1>
+  <p class="muted">This is a fresh install. Choose a password for the single admin account.</p>
+  {{if .Error}}<div class="error">{{.Error}}</div>{{end}}
+  <form method="post" action="/setup">
+    <label for="password">Admin password</label>
+    <input type="password" id="password" name="password" minlength="8" required autofocus>
+    <label for="confirm">Confirm password</label>
+    <input type="password" id="confirm" name="confirm" minlength="8" required>
+    <p class="muted" style="margin-top:1rem"><button type="submit">Create admin account</button></p>
+  </form>
+</div>
+{{end}}

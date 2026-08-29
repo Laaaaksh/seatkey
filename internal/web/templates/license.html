@@ -1,0 +1,71 @@
+{{define "license"}}
+<p class="muted"><a href="/products/{{.License.ProductID}}">← {{.License.ProductName}}</a></p>
+<h1 class="mono">{{.License.Key}}</h1>
+<p>
+  <span class="badge {{.License.StatusText}}">{{.License.StatusText}}</span>
+  <span class="muted">{{.License.CustomerName}}{{if .License.CustomerEmail}} · {{.License.CustomerEmail}}{{end}}</span>
+</p>
+
+<div class="card">
+  <h2>Details</h2>
+  <table>
+    <tr><th>Product</th><td>{{.License.ProductName}}</td></tr>
+    <tr><th>Seats</th><td>{{.License.DeviceCount}} / {{.License.MaxDevices}}</td></tr>
+    <tr><th>Expires</th><td>{{.License.ExpiresText}}</td></tr>
+    <tr><th>Issued</th><td>{{.License.CreatedText}}</td></tr>
+  </table>
+  {{if ne .License.StatusText "revoked"}}
+  <form class="inline" method="post" action="/licenses/{{.License.ID}}/revoke" onsubmit="return confirm('Revoke this license key? This cannot be undone.')">
+    <p style="margin-top:1rem"><button class="danger" type="submit">Revoke license</button></p>
+  </form>
+  {{end}}
+</div>
+
+<div class="card">
+  <h2>Activated devices</h2>
+  {{if .Devices}}
+  <table>
+    <thead><tr><th>Device ID</th><th>Name</th><th>Activated</th><th>Last seen</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+    {{range .Devices}}
+      <tr>
+        <td class="mono">{{.DeviceID}}</td>
+        <td>{{.DeviceName}}</td>
+        <td class="muted">{{.ActivatedAt.Format "2006-01-02 15:04"}}</td>
+        <td class="muted">{{.LastSeenAt.Format "2006-01-02 15:04"}}</td>
+        <td>{{if .DeactivatedAt}}<span class="badge revoked">freed</span>{{else}}<span class="badge active">active</span>{{end}}</td>
+        <td>
+          {{if not .DeactivatedAt}}
+          <form class="inline" method="post" action="/licenses/{{$.License.ID}}/devices/{{.DeviceID}}/deactivate">
+            <button class="secondary" type="submit">Free seat</button>
+          </form>
+          {{end}}
+        </td>
+      </tr>
+    {{end}}
+    </tbody>
+  </table>
+  {{else}}
+  <p class="empty">No devices have activated this license yet.</p>
+  {{end}}
+</div>
+
+<div class="card">
+  <h2>Offline activation</h2>
+  <p class="muted">
+    For a customer with no network access: they run
+    <code>democli offline-request --key {{.License.Key}} --device &lt;id&gt;</code> and send you the
+    printed JSON. Paste it below to generate a signed activation file they can use forever
+    without contacting this server again.
+  </p>
+  <form method="post" action="/licenses/{{.License.ID}}/offline-activate">
+    <label for="request_json">Request JSON from the customer</label>
+    <textarea id="request_json" name="request_json" rows="4" placeholder='{"device_id":"...","device_name":"..."}' required></textarea>
+    <p style="margin-top:1rem"><button type="submit">Generate signed activation file</button></p>
+  </form>
+  {{if .OfflineResult}}
+  <label>Result — send this file back to the customer</label>
+  <pre>{{.OfflineResult}}</pre>
+  {{end}}
+</div>
+{{end}}

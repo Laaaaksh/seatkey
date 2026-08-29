@@ -1,0 +1,48 @@
+name: Bug report
+description: Something isn't working the way it should.
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+      placeholder: |
+        Steps to reproduce:
+        1. ...
+        2. ...
+
+        Expected: ...
+        Actual: ...
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: seatkeyd version
+      description: Output of `seatkeyd --version`
+      placeholder: v0.1.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: How you're running Seatkey and where.
+      placeholder: |
+        - Deployment: Docker / binary / built from source
+        - OS: e.g. Ubuntu 24.04, macOS 15
+        - Reverse proxy (if any): e.g. Caddy, nginx, Cloudflare Tunnel
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Paste seatkeyd's stdout/stderr around the time of the issue, if any.
+      render: shell
+    validations:
+      required: false

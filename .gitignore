@@ -1,0 +1,25 @@
+# Build output
+/bin/
+/dist/
+
+# Go
+*.test
+*.out
+vendor/
+
+# Local runtime data
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# macOS
+.DS_Store
+
+# Editor
+.idea/
+.vscode/
+*.swp
+
+# Local dev
+.env
