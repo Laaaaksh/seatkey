@@ -3,7 +3,7 @@
 ## Supported versions
 
 Seatkey is a young project. Security fixes are made against the **latest
-release** and `main` only — please confirm you can reproduce the issue on the
+release** and `master` only — please confirm you can reproduce the issue on the
 newest release (`seatkeyd --version`) before reporting.
 
 | Version        | Supported |

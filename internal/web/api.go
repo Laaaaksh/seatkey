@@ -3,6 +3,7 @@ package web
 import (
 	"encoding/json"
 	"errors"
+	"log"
 	"net/http"
 
 	"github.com/Laaaaksh/seatkey/internal/crypto"
@@ -48,6 +49,7 @@ func mapLicenseError(w http.ResponseWriter, err error) {
 	case errors.Is(err, license.ErrLicenseStatus):
 		writeAPIError(w, http.StatusForbidden, "license_not_active", err.Error())
 	default:
+		log.Printf("api: unexpected error: %v", err)
 		writeAPIError(w, http.StatusInternalServerError, "internal_error", "internal error")
 	}
 }

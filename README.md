@@ -70,17 +70,18 @@ stopping you from self-hosting your license server, this is the alternative.
 
 ## Install
 
-**Docker** (recommended):
-
-```bash
-docker run -d --name seatkey -p 8080:8080 -v seatkey-data:/data ghcr.io/laaaaksh/seatkey:latest
-```
-
-**From source:**
+**From source** (works today, requires [Go 1.26+](https://go.dev/dl/)):
 
 ```bash
 go install github.com/Laaaaksh/seatkey/cmd/seatkeyd@latest
 go install github.com/Laaaaksh/seatkey/cmd/democli@latest   # optional: reference client, see Usage
+```
+
+**Docker** and **prebuilt binaries** (available from the first tagged release — see
+[Releases](https://github.com/Laaaaksh/seatkey/releases) for whether one exists yet):
+
+```bash
+docker run -d --name seatkey -p 8080:8080 -v seatkey-data:/data ghcr.io/laaaaksh/seatkey:latest
 ```
 
 Or download a prebuilt binary from [GitHub Releases](https://github.com/Laaaaksh/seatkey/releases).

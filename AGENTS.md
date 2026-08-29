@@ -11,7 +11,7 @@ for the build/release workflow — don't duplicate those here.
 
 ## Architecture
 
-- `internal/store` — SQLite persistence (pure-Go `modernc.org/sqlite`, no cgo). Owns schema and CRUD only, no business rules.
+- `internal/store` — SQLite persistence (pure-Go `modernc.org/sqlite`, no cgo). Owns schema and CRUD only, no business rules. `devices` has `UNIQUE(license_id, device_id)` and deactivation is a soft delete (`deactivated_at` set, row kept) — `ActivateDevice` is therefore an upsert (`ON CONFLICT ... DO UPDATE ... RETURNING id`, clearing `deactivated_at`), not a blind `INSERT`, so the same device can be freed and later reactivated on the same license without violating the UNIQUE constraint.
 - `internal/crypto` — generic Ed25519 sign/verify of a `{payload, signature}` envelope. Signs raw JSON bytes rather than re-marshaling on verify, so there's no canonicalization step to get wrong.
 - `internal/license` — the actual licensing rules (seat-limit enforcement, activate/validate/deactivate, offline activation) on top of `store` + `crypto`. Put new business rules here, not in HTTP handlers.
 - `internal/webhook` — outbound HMAC-signed event delivery, fire-and-forget with one retry.
@@ -29,6 +29,8 @@ for the build/release workflow — don't duplicate those here.
 ## Build/test/lint
 
 Standard: `make build` / `make test` / `make lint`. Full details (release tagging, changelog process, code style) are in CONTRIBUTING.md — read that, not this file, before cutting a release.
+
+The default branch is `master`, not GitHub's usual `main` — `.github/workflows/*.yml`'s branch filters and any doc mentioning a base branch (CONTRIBUTING.md, SECURITY.md) must say `master`. This has bitten the repo before (CI silently never ran because its trigger watched `main`); check this first if a workflow that should be running isn't.
 
 - `golangci-lint`'s `revive` `exported` rule requires a doc comment on every exported symbol; `.golangci.yml` has the exact linter set.
 - Crypto/license tests must cover tampering, wrong-key, and expiry cases, not just the happy path — see `internal/crypto/envelope_test.go` and `internal/license/service_test.go` for the pattern to follow.

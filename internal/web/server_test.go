@@ -318,6 +318,63 @@ func TestDeviceDeactivateFreesSeatThroughDashboard(t *testing.T) {
 	}
 }
 
+func TestDashboardOfflineActivateIssuesSignedEnvelope(t *testing.T) {
+	ts := newTestServer(t)
+	client := newAuthedClient(t, ts)
+	key := productAndLicense(t, ts, client, "1")
+	licenseID := licenseIDFromKey(t, ts, client, key)
+
+	requestJSON, _ := json.Marshal(map[string]string{
+		"license_key": key, "device_id": "airgapped-device", "device_name": "Air-gapped box",
+	})
+	resp, err := client.PostForm(ts.URL+"/licenses/"+licenseID+"/offline-activate", url.Values{
+		"request_json": {string(requestJSON)},
+	})
+	if err != nil {
+		t.Fatalf("offline-activate: %v", err)
+	}
+	defer resp.Body.Close()
+
+	raw := resp.Request.URL.Query().Get("offline_result")
+	if raw == "" {
+		body, _ := readAll(resp)
+		t.Fatalf("no offline_result in final redirect URL %s; body=%s", resp.Request.URL, body)
+	}
+	var env skcrypto.Envelope
+	if err := json.Unmarshal([]byte(raw), &env); err != nil {
+		t.Fatalf("decode offline_result envelope: %v (raw=%s)", err, raw)
+	}
+	if len(env.Payload) == 0 || len(env.Signature) == 0 {
+		t.Fatalf("offline activation envelope missing payload/signature: %+v", env)
+	}
+
+	var tok license.Token
+	pkResp, err := http.Get(ts.URL + "/v1/pubkey")
+	if err != nil {
+		t.Fatalf("pubkey: %v", err)
+	}
+	defer pkResp.Body.Close()
+	var pk struct {
+		PublicKey string `json:"public_key"`
+	}
+	if err := json.NewDecoder(pkResp.Body).Decode(&pk); err != nil {
+		t.Fatalf("decode pubkey: %v", err)
+	}
+	pub, err := skcrypto.DecodePublicKey(pk.PublicKey)
+	if err != nil {
+		t.Fatalf("DecodePublicKey: %v", err)
+	}
+	if err := skcrypto.Verify(pub, env, &tok); err != nil {
+		t.Fatalf("Verify offline activation envelope: %v", err)
+	}
+	if !tok.Offline {
+		t.Fatal("token issued by offline-activate should be marked offline")
+	}
+	if tok.LicenseKey != key {
+		t.Fatalf("tok.LicenseKey = %q, want %q", tok.LicenseKey, key)
+	}
+}
+
 func licenseIDFromKey(t *testing.T, ts *httptest.Server, client *http.Client, key string) string {
 	t.Helper()
 	resp, err := client.Get(ts.URL + "/products")
