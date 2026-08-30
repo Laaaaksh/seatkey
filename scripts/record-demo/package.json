@@ -1,0 +1,13 @@
+{
+  "name": "seatkey-record-demo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Records a real, genuine end-to-end demo of seatkeyd + democli. Dev-only tooling, not part of the product build.",
+  "type": "commonjs",
+  "scripts": {
+    "record": "node record.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1"
+  }
+}

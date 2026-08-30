@@ -37,7 +37,13 @@ The default branch is `master`, not GitHub's usual `main` — `.github/workflows
 
 ## Demo assets
 
-`docs/assets/seatkey-demo.gif` and the two dashboard PNGs were built from real captured output/screenshots of the actual running server (headless Chrome + ffmpeg), not mockups. If the CLI output format or dashboard UI changes meaningfully, regenerate them the same way rather than hand-editing stale assets.
+`docs/assets/demo.mp4`/`demo.gif` are produced by `make demo` (`scripts/record-demo/`, a
+self-contained Playwright + Node package, not a Go build dependency) — a real `seatkeyd` +
+`democli` run, not a mockup. It boots the server, issues a license, hits the seat limit,
+frees a seat, and shows the client losing access, then converts with ffmpeg. Regenerate
+through that script, not by hand-editing, whenever the CLI output or dashboard UI changes
+meaningfully; see `scripts/record-demo/README.md` for how to re-run it. The two dashboard
+PNGs are separate real screenshots, not covered by this script.
 
 ## Maintaining this file
 

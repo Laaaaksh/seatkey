@@ -1,4 +1,4 @@
-.PHONY: build run test lint tidy clean
+.PHONY: build run test lint tidy clean demo
 
 MODULE := github.com/Laaaaksh/seatkey
 VERSION := $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
@@ -23,3 +23,10 @@ tidy:
 clean:
 	rm -rf bin/
 	go clean -testcache
+
+# Boots a real seatkeyd, drives it and democli through Playwright, and
+# converts the capture into docs/assets/demo.mp4 + demo.gif. See
+# scripts/record-demo/README.md. Override the port with APP_PORT=<port> if
+# :8080 is taken.
+demo:
+	cd scripts/record-demo && npm install && npx playwright install chromium && npm run record
