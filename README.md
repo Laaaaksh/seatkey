@@ -23,6 +23,15 @@ tier gates SSO or audit logs behind a second purchase, because there isn't one.
 
 </div>
 
+## Demo
+
+![Seatkey demo](docs/assets/demo.gif)
+
+A real, locally running `seatkeyd` issuing a license key, activating two devices, refusing a third
+once the seat limit is reached, then freeing a seat from the dashboard and showing the freed device
+lose access on its next check — driven end to end through the actual web UI and the bundled
+`democli` client. Full quality: [docs/assets/demo.mp4](docs/assets/demo.mp4).
+
 ## What it does
 
 - Issue license keys per product and customer, each with a configurable device (seat) limit.
@@ -37,10 +46,6 @@ tier gates SSO or audit logs behind a second purchase, because there isn't one.
   billing (Stripe, Paddle, whatever you already use) without Seatkey integrating with it directly.
 - Run as a single static binary with an embedded SQLite database — no Postgres, no Redis, nothing
   else to run.
-
-<p align="center">
-  <img src="docs/assets/seatkey-demo.gif" alt="seatkey demo: activate two devices, get rejected on a third, then activate fully offline" width="700">
-</p>
 
 The dashboard itself:
 
