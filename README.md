@@ -17,7 +17,7 @@ tier gates SSO or audit logs behind a second purchase, because there isn't one.
 [![Go](https://img.shields.io/badge/go-1.26+-00ADD8?logo=go&logoColor=white)](go.mod)
 [![Docker](https://img.shields.io/badge/docker-ghcr.io%2Flaaaaksh%2Fseatkey-2496ED?logo=docker&logoColor=white)](#install)
 
-**[Install](#install) • [Usage](#usage) • [Configuration](#configuration) • [Changelog](CHANGELOG.md) • [Contributing](CONTRIBUTING.md) • [License](LICENSE)**
+**[Install](#install) • [Usage](#usage) • [Configuration](#configuration) • [Limits](#limits) • [Changelog](CHANGELOG.md) • [Contributing](CONTRIBUTING.md) • [License](LICENSE)**
 
 **[Code of conduct](CODE_OF_CONDUCT.md) • [Security](SECURITY.md)**
 
@@ -140,6 +140,30 @@ Seatkey is configured entirely through environment variables — there is no con
 
 The webhook URL/secret and the admin password are configured from the dashboard's Settings page,
 not environment variables, since they're expected to change after initial setup.
+
+## Limits
+
+Seatkey is young and deliberately narrow. Known gaps, stated plainly rather than left for you to
+discover:
+
+- **No tagged release yet.** Docker images and prebuilt binaries publish automatically once a
+  version is tagged — see [Install](#install) and [Releases](https://github.com/Laaaaksh/seatkey/releases).
+  Until then, building from source is the only way to run it.
+- **Offline activation tokens can't be revoked.** Once issued, a signed offline activation file
+  verifies forever (or until the license's own expiry) — there's no server round-trip to check
+  against by design. See [SECURITY.md](SECURITY.md) for why this is inherent to the feature, not
+  a bug to be fixed.
+- **One admin login, no roles or SSO.** The dashboard has a single password, not per-user
+  accounts or permission levels — fine for a solo vendor, a real gap if you want to give someone
+  read-only access without handing over full control.
+- **Built to run as one process, not a cluster.** The embedded SQLite database is opened with a
+  single connection; Seatkey is meant to sit behind your own reverse proxy as one instance, not
+  scale horizontally across many.
+- **No rate limiting on the public API.** `/v1/activate` and its siblings take no credential
+  beyond the license key itself and aren't throttled — put a reverse proxy or WAF in front if
+  that matters for your deployment.
+- **Webhooks are fire-and-forget with one retry.** If your receiver is down for both attempts,
+  the event is dropped — there's no durable queue or backoff schedule behind it.
 
 ## Changelog
 
