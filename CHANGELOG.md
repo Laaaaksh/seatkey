@@ -27,4 +27,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Single-binary server (`seatkeyd`) backed by embedded SQLite - no external
   database required to self-host.
 
-[Unreleased]: https://github.com/Laaaaksh/seatkey/compare/7ccbd9b...HEAD
+[Unreleased]: https://github.com/attentionfs/seatkey/compare/7ccbd9b...HEAD

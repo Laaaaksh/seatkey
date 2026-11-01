@@ -10,8 +10,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Laaaaksh/seatkey/internal/license"
-	"github.com/Laaaaksh/seatkey/internal/store"
+	"github.com/attentionfs/seatkey/internal/license"
+	"github.com/attentionfs/seatkey/internal/store"
 )
 
 //go:embed templates/*.html

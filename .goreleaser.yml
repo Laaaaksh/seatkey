@@ -41,7 +41,7 @@ checksum:
 
 release:
   github:
-    owner: Laaaaksh
+    owner: attentionfs
     name: seatkey
   draft: false
   prerelease: auto

@@ -8,11 +8,11 @@ Issue license keys, enforce per-license device limits, and support fully offline
 desktop apps and CLIs — as one static Go binary with an embedded database. No paid Enterprise
 tier gates SSO or audit logs behind a second purchase, because there isn't one.
 
-[![Star this repo](https://img.shields.io/github/stars/Laaaaksh/seatkey?style=for-the-badge&logo=github&label=star%20this%20repo&color=yellow)](https://github.com/Laaaaksh/seatkey/stargazers)
+[![Star this repo](https://img.shields.io/github/stars/attentionfs/seatkey?style=for-the-badge&logo=github&label=star%20this%20repo&color=yellow)](https://github.com/attentionfs/seatkey/stargazers)
 [![MIT alternative to Keygen](https://img.shields.io/badge/MIT_alternative_to-Keygen.sh-58a6ff?style=for-the-badge)](#why-seatkey)
 
-[![CI](https://github.com/Laaaaksh/seatkey/actions/workflows/ci.yml/badge.svg)](https://github.com/Laaaaksh/seatkey/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/Laaaaksh/seatkey?color=green&display_name=tag)](https://github.com/Laaaaksh/seatkey/releases)
+[![CI](https://github.com/attentionfs/seatkey/actions/workflows/ci.yml/badge.svg)](https://github.com/attentionfs/seatkey/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/attentionfs/seatkey?color=green&display_name=tag)](https://github.com/attentionfs/seatkey/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](LICENSE)
 [![Go](https://img.shields.io/badge/go-1.26+-00ADD8?logo=go&logoColor=white)](go.mod)
 [![Docker](https://img.shields.io/badge/docker-ghcr.io%2Flaaaaksh%2Fseatkey-2496ED?logo=docker&logoColor=white)](#install)
@@ -78,18 +78,18 @@ stopping you from self-hosting your license server, this is the alternative.
 **From source** (works today, requires [Go 1.26+](https://go.dev/dl/)):
 
 ```bash
-go install github.com/Laaaaksh/seatkey/cmd/seatkeyd@latest
-go install github.com/Laaaaksh/seatkey/cmd/democli@latest   # optional: reference client, see Usage
+go install github.com/attentionfs/seatkey/cmd/seatkeyd@latest
+go install github.com/attentionfs/seatkey/cmd/democli@latest   # optional: reference client, see Usage
 ```
 
 **Docker** and **prebuilt binaries** (available from the first tagged release — see
-[Releases](https://github.com/Laaaaksh/seatkey/releases) for whether one exists yet):
+[Releases](https://github.com/attentionfs/seatkey/releases) for whether one exists yet):
 
 ```bash
 docker run -d --name seatkey -p 8080:8080 -v seatkey-data:/data ghcr.io/laaaaksh/seatkey:latest
 ```
 
-Or download a prebuilt binary from [GitHub Releases](https://github.com/Laaaaksh/seatkey/releases).
+Or download a prebuilt binary from [GitHub Releases](https://github.com/attentionfs/seatkey/releases).
 
 ## Usage
 
@@ -152,7 +152,7 @@ Seatkey is young and deliberately narrow. Known gaps, stated plainly rather than
 discover:
 
 - **No tagged release yet.** Docker images and prebuilt binaries publish automatically once a
-  version is tagged — see [Install](#install) and [Releases](https://github.com/Laaaaksh/seatkey/releases).
+  version is tagged — see [Install](#install) and [Releases](https://github.com/attentionfs/seatkey/releases).
   Until then, building from source is the only way to run it.
 - **Offline activation tokens can't be revoked.** Once issued, a signed offline activation file
   verifies forever (or until the license's own expiry) — there's no server round-trip to check
@@ -185,7 +185,7 @@ See [SECURITY.md](SECURITY.md) for supported versions and how to privately repor
 ## Star this repo
 
 If Seatkey saved you from either writing your own license server or paying for one, a star helps
-other people looking for the same thing find it: [⭐ star seatkey](https://github.com/Laaaaksh/seatkey/stargazers).
+other people looking for the same thing find it: [⭐ star seatkey](https://github.com/attentionfs/seatkey/stargazers).
 
 ## License
 

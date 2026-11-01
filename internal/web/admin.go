@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Laaaaksh/seatkey/internal/license"
-	"github.com/Laaaaksh/seatkey/internal/store"
+	"github.com/attentionfs/seatkey/internal/license"
+	"github.com/attentionfs/seatkey/internal/store"
 )
 
 func (s *Server) handleProductsList(w http.ResponseWriter, r *http.Request) {

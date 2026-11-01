@@ -12,11 +12,11 @@ import (
 	"os"
 	"time"
 
-	skcrypto "github.com/Laaaaksh/seatkey/internal/crypto"
-	"github.com/Laaaaksh/seatkey/internal/license"
-	"github.com/Laaaaksh/seatkey/internal/store"
-	"github.com/Laaaaksh/seatkey/internal/web"
-	"github.com/Laaaaksh/seatkey/internal/webhook"
+	skcrypto "github.com/attentionfs/seatkey/internal/crypto"
+	"github.com/attentionfs/seatkey/internal/license"
+	"github.com/attentionfs/seatkey/internal/store"
+	"github.com/attentionfs/seatkey/internal/web"
+	"github.com/attentionfs/seatkey/internal/webhook"
 )
 
 // version is set at build/release time via -ldflags "-X main.version=...".

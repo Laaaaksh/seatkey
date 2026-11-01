@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	skcrypto "github.com/Laaaaksh/seatkey/internal/crypto"
-	"github.com/Laaaaksh/seatkey/internal/store"
+	skcrypto "github.com/attentionfs/seatkey/internal/crypto"
+	"github.com/attentionfs/seatkey/internal/store"
 )
 
 type recordingNotifier struct {

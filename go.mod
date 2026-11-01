@@ -1,4 +1,4 @@
-module github.com/Laaaaksh/seatkey
+module github.com/attentionfs/seatkey
 
 go 1.26.5
 

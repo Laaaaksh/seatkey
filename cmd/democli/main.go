@@ -16,8 +16,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/Laaaaksh/seatkey/internal/crypto"
-	"github.com/Laaaaksh/seatkey/internal/license"
+	"github.com/attentionfs/seatkey/internal/crypto"
+	"github.com/attentionfs/seatkey/internal/license"
 )
 
 func main() {

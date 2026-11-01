@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Laaaaksh/seatkey/internal/crypto"
-	"github.com/Laaaaksh/seatkey/internal/license"
+	"github.com/attentionfs/seatkey/internal/crypto"
+	"github.com/attentionfs/seatkey/internal/license"
 )
 
 // activateRequest is shared by /v1/activate and /v1/validate: both key off

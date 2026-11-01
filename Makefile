@@ -1,6 +1,6 @@
 .PHONY: build run test lint tidy clean demo
 
-MODULE := github.com/Laaaaksh/seatkey
+MODULE := github.com/attentionfs/seatkey
 VERSION := $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
 LDFLAGS := -X main.version=$(VERSION)
 

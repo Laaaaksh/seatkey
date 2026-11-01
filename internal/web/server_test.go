@@ -10,9 +10,9 @@ import (
 	"strings"
 	"testing"
 
-	skcrypto "github.com/Laaaaksh/seatkey/internal/crypto"
-	"github.com/Laaaaksh/seatkey/internal/license"
-	"github.com/Laaaaksh/seatkey/internal/store"
+	skcrypto "github.com/attentionfs/seatkey/internal/crypto"
+	"github.com/attentionfs/seatkey/internal/license"
+	"github.com/attentionfs/seatkey/internal/store"
 )
 
 func newTestServer(t *testing.T) *httptest.Server {
